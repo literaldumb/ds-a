@@ -39,6 +39,49 @@ void print(struct node *list)
     }
 }
 
+void split(struct node *list, struct node **list1, struct node **list2)
+{
+    if(list == NULL)
+        return;
+        
+    struct node *slow=NULL;
+    struct node *fast=NULL;
+    
+    fast=list;
+    slow=list;
+    
+    while(fast->next != NULL)
+    {
+        if(slow->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        if(fast->next != NULL)
+        {
+            fast = fast->next;
+        }
+    }
+}
+
+void merge()
+{
+    
+}
+
+void mergesort(struct node **list)
+{
+    struct node *list1=NULL;
+    struct node *list2=NULL;
+    
+    split(*list,&list1,&list2);
+    
+    mergesort(&list1);
+    mergesort(&list2);
+    
+    *list = merge(&list1,&list2);
+}
+
 int main() {
 	// your code goes here
 	struct node *list=NULL, *tail=NULL;
@@ -50,6 +93,10 @@ int main() {
 	push(&list,&tail,8);
 	push(&list,&tail,6);
 	
+	//sort
+	mergesort(&list);
+	
+	//print
 	print(list);
 	return 0;
 }
